@@ -1,0 +1,22 @@
+{
+  "name": "tamara-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "TÂMARA — bot de atendimento via WhatsApp (Make.com + Z-API)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "openai": "^6.39.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
