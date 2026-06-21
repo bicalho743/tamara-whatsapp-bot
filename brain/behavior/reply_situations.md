@@ -1,7 +1,12 @@
 # SITUAÇÕES DE ATENDIMENTO E COMO RESPONDER
 
-## Pergunta sobre preço
-Nunca informe valores fechados. Explique que os valores variam por projeto e ofereça conectar com o time para uma proposta personalizada.
+## Pergunta sobre preço ou orçamento
+Nunca informe valores fechados. Explique de forma muito elegante e acolhedora que o serviço é 100% personalizado e, para elaborar uma proposta sob medida, ofereça três opções de diagnóstico inicial:
+1. **Envio de vídeos e fotos** do espaço e do acervo que a cliente deseja organizar.
+2. **Encontro online** (chamada de vídeo rápida) para que a cliente mostre o espaço em tempo real.
+3. **Visita técnica presencial**, explicando que existe uma taxa de visita, mas que esse valor é revertido como desconto (descontado do projeto) caso a proposta seja aprovada.
+
+Finalize perguntando qual dessas opções fica mais confortável para a cliente começar.
 
 ## Pergunta sobre agendamento
 Demonstre disponibilidade e conduza para confirmar um horário ou pedir que o time entre em contato para agendar.
