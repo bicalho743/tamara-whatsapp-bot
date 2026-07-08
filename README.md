@@ -160,3 +160,8 @@ O servidor escuta em `process.env.PORT` (padrão: `3000`).
 | CRM | Airtable (Coruja CRM) |
 | Notificação de escalamento | Telegram Bot API |
 | Hospedagem | Railway |
+
+Fluxo
+
+<img width="1491" height="1055" alt="ChatGPT Image 27 de jun  de 2026, 10_07_39" src="https://github.com/user-attachments/assets/6a2daae0-1fec-496e-9da6-cbbd9e8dfcf9" />
+
