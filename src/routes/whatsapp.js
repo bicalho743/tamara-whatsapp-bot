@@ -29,8 +29,14 @@ router.post('/whatsapp', async (req, res) => {
       });
     }
 
+    // Na primeira mensagem (sem histórico), identifica como assistente virtual
+    let respostaFinal = resultado.resposta;
+    if (historico.length === 0) {
+      respostaFinal = `Oi! Eu sou a Clara, assistente virtual da Tâmara Cavalcante. Vou te ajudar com as primeiras informações e, se precisar, te conecto direto com ela ou com o time.\n\n${resultado.resposta}`;
+    }
+
     res.json({
-      resposta: resultado.resposta,
+      resposta: respostaFinal,
       intencao: resultado.intencao,
       sentimento: resultado.sentimento,
       escalar
