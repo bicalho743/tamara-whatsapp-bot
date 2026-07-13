@@ -5,33 +5,38 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
 function formatarHistorico(historico = []) {
-  const ultimas = historico.slice(-5);
-  return ultimas
+  const ultimas = historico.slice(-6);
+  if (ultimas.length === 0) return '';
+  const linhas = ultimas
     .map(item => `${item.direcao === 'recebida' ? 'Cliente' : 'Tâmara'}: ${item.conteudo}`)
     .join('\n');
+  return `HISTÓRICO RECENTE DA CONVERSA:\n${linhas}\n\n`;
 }
 
 async function gerarRespostaAtendimento(mensagem, historico = []) {
   const contextoHistorico = formatarHistorico(historico);
 
-  const prompt = `${contextoHistorico ? `HISTÓRICO RECENTE DA CONVERSA:\n${contextoHistorico}\n\n` : ''}MENSAGEM ATUAL DA CLIENTE:\n"${mensagem}"
+  // User prompt = APENAS contexto, sem instruções de persona (isso está no system prompt)
+  const userMessage = `${contextoHistorico}MENSAGEM ATUAL DA CLIENTE:
+"${mensagem}"
 
-Responda como TÂMARA CAVALCANTE atendendo esta cliente no WhatsApp.
-
-Retorne APENAS um objeto JSON com as chaves:
-- "resposta": texto curto e natural para enviar à cliente via WhatsApp
-- "intencao": uma destas exatas: "agendamento", "preco", "duvida", "reclamacao", "elogio", "outro"
-- "sentimento": uma destas exatas: "positivo", "neutro", "frustrado"
-- "escalar": true ou false — true se esta conversa precisa de atendimento humano (frustração clara, pedido de proposta personalizada, pedido explícito por humano/atendente, ou caso fora do que pode ser resolvido automaticamente)`;
+INSTRUÇÕES DE SAÍDA:
+1. Primeiro, escreva a resposta como Tâmara escreveria no WhatsApp — curta, acolhedora, com personalidade. Esta é a parte mais importante.
+2. Depois, classifique a intenção e o sentimento.
+3. Retorne APENAS um JSON com estas chaves:
+   - "resposta": o texto que será enviado à cliente (1-4 frases curtas, tom Tâmara)
+   - "intencao": "agendamento" | "preco" | "duvida" | "reclamacao" | "elogio" | "outro"
+   - "sentimento": "positivo" | "neutro" | "frustrado"
+   - "escalar": true ou false (true se: frustração clara, pedido de proposta personalizada, pedido por humano/atendente, ou caso fora do escopo)`;
 
   const response = await client.chat.completions.create({
     model: MODEL,
     messages: [
       { role: 'system', content: getSystemPrompt('whatsapp') },
-      { role: 'user', content: prompt }
+      { role: 'user', content: userMessage }
     ],
     response_format: { type: 'json_object' },
-    temperature: 0.7
+    temperature: 0.8
   });
 
   const resultado = JSON.parse(response.choices[0].message.content.trim());
@@ -39,3 +44,4 @@ Retorne APENAS um objeto JSON com as chaves:
 }
 
 module.exports = { gerarRespostaAtendimento };
+
