@@ -5,9 +5,6 @@ const { notificarEscalonamento } = require('../modules/telegram');
 
 const router = express.Router();
 
-// Rastreia telefones que já receberam a apresentação da Clara
-const telefonesApresentados = new Set();
-
 router.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
@@ -32,13 +29,10 @@ router.post('/whatsapp', async (req, res) => {
       });
     }
 
-    // Apresentação da Clara: apenas no PRIMEIRO contato real deste telefone
+    // Apresentação da Clara: APENAS quando Make.com envia primeiro_contato = true
     let respostaFinal = resultado.resposta;
-    const ehPrimeiroContato = primeiro_contato === true || !telefonesApresentados.has(telefone);
-
-    if (ehPrimeiroContato) {
+    if (primeiro_contato === true) {
       respostaFinal = `Oi! Eu sou a Clara, assistente virtual da Tâmara Cavalcante. Vou te ajudar com as primeiras informações e, se precisar, te conecto direto com ela ou com o time.\n\n${resultado.resposta}`;
-      telefonesApresentados.add(telefone);
     }
 
     res.json({
