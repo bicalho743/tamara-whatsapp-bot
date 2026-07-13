@@ -23,6 +23,7 @@ function loadBrainFromFiles() {
     'behavior/sensitive_topics.md',
     'behavior/reply_situations.md',
     'behavior/qualification.md',
+    'behavior/agendamento.md',
 
     'memory/client_insights.md',
     'memory/content_learning.md',

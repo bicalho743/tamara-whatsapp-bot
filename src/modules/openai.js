@@ -29,7 +29,8 @@ INSTRUÇÕES DE SAÍDA:
    - "sentimento": "positivo" | "neutro" | "frustrado"
    - "escalar": true ou false (true se: frustração clara, pedido de proposta personalizada, pedido por humano/atendente, ou caso fora do escopo)
    - "etapa_funil": "lead_novo" | "qualificacao" | "lead_quente" | "oportunidade"
-   - "dados_coletados": objeto com APENAS os dados que a cliente informou NESTA mensagem (chaves possíveis: nome, email, endereco_atual, endereco_destino, membros_familia, criancas, qtd_criancas, pets, qtd_pets, m2_atual, m2_destino, comodos, expectativa, origem). Se nenhum dado foi informado, retorne {}`;
+   - "dados_coletados": objeto com APENAS os dados que a cliente informou NESTA mensagem (chaves possíveis: nome, email, endereco_atual, endereco_destino, membros_familia, criancas, qtd_criancas, pets, qtd_pets, m2_atual, m2_destino, comodos, expectativa, origem). Se nenhum dado foi informado, retorne {}
+   - "dados_agendamento": objeto com dados de agendamento SE a conversa estiver nesse fluxo (chaves: tipo_consulta, data_preferida, horario_preferido, agendamento_pronto). Se não houver fluxo de agendamento, não inclua este campo`;
 
   const response = await client.chat.completions.create({
     model: MODEL,
