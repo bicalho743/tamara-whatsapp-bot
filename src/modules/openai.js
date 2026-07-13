@@ -22,12 +22,14 @@ async function gerarRespostaAtendimento(mensagem, historico = []) {
 
 INSTRUÇÕES DE SAÍDA:
 1. Primeiro, escreva a resposta como Tâmara escreveria no WhatsApp — curta, acolhedora, com personalidade. Esta é a parte mais importante.
-2. Depois, classifique a intenção e o sentimento.
+2. Siga as regras de QUALIFICAÇÃO CONVERSACIONAL do brain: identifique a etapa do funil e, quando for o momento certo, colete dados do lead de forma natural (máximo 1-2 perguntas por mensagem).
 3. Retorne APENAS um JSON com estas chaves:
    - "resposta": o texto que será enviado à cliente (1-4 frases curtas, tom Tâmara)
    - "intencao": "agendamento" | "preco" | "duvida" | "reclamacao" | "elogio" | "outro"
    - "sentimento": "positivo" | "neutro" | "frustrado"
-   - "escalar": true ou false (true se: frustração clara, pedido de proposta personalizada, pedido por humano/atendente, ou caso fora do escopo)`;
+   - "escalar": true ou false (true se: frustração clara, pedido de proposta personalizada, pedido por humano/atendente, ou caso fora do escopo)
+   - "etapa_funil": "lead_novo" | "qualificacao" | "lead_quente" | "oportunidade"
+   - "dados_coletados": objeto com APENAS os dados que a cliente informou NESTA mensagem (chaves possíveis: nome, email, endereco_atual, endereco_destino, membros_familia, criancas, qtd_criancas, pets, qtd_pets, m2_atual, m2_destino, comodos, expectativa, origem). Se nenhum dado foi informado, retorne {}`;
 
   const response = await client.chat.completions.create({
     model: MODEL,

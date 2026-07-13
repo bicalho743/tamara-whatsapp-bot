@@ -39,7 +39,9 @@ router.post('/whatsapp', async (req, res) => {
       resposta: respostaFinal,
       intencao: resultado.intencao,
       sentimento: resultado.sentimento,
-      escalar
+      escalar,
+      etapa_funil: resultado.etapa_funil || 'lead_novo',
+      dados_coletados: resultado.dados_coletados || {}
     });
   } catch (err) {
     console.error('[whatsapp] Erro ao processar mensagem:', err.message);
