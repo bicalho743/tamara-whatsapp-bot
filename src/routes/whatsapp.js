@@ -5,12 +5,15 @@ const { notificarEscalonamento } = require('../modules/telegram');
 
 const router = express.Router();
 
+// Rastreia telefones que já receberam a apresentação da Clara
+const telefonesApresentados = new Set();
+
 router.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
 router.post('/whatsapp', async (req, res) => {
-  const { mensagem, telefone, historico = [] } = req.body;
+  const { mensagem, telefone, historico = [], primeiro_contato } = req.body;
 
   if (!mensagem || !telefone) {
     return res.status(400).json({ error: 'Campos "mensagem" e "telefone" são obrigatórios.' });
@@ -29,10 +32,13 @@ router.post('/whatsapp', async (req, res) => {
       });
     }
 
-    // Na primeira mensagem (sem histórico), identifica como assistente virtual
+    // Apresentação da Clara: apenas no PRIMEIRO contato real deste telefone
     let respostaFinal = resultado.resposta;
-    if (historico.length === 0) {
+    const ehPrimeiroContato = primeiro_contato === true || !telefonesApresentados.has(telefone);
+
+    if (ehPrimeiroContato) {
       respostaFinal = `Oi! Eu sou a Clara, assistente virtual da Tâmara Cavalcante. Vou te ajudar com as primeiras informações e, se precisar, te conecto direto com ela ou com o time.\n\n${resultado.resposta}`;
+      telefonesApresentados.add(telefone);
     }
 
     res.json({
@@ -50,3 +56,4 @@ router.post('/whatsapp', async (req, res) => {
 });
 
 module.exports = router;
+
